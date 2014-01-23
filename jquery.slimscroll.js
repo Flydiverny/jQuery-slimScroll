@@ -138,6 +138,8 @@
                 bar.remove();
                 rail.remove();
                 me.unwrap();
+                // reset manual styles added
+                me.css({height: "", width: "", overflow: ""});
                 return;
               }
 
