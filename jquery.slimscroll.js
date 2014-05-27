@@ -133,6 +133,7 @@
                 bar.remove();
                 rail.remove();
                 me.unwrap();
+                detachWheel();
                 return;
               }
 
@@ -303,6 +304,10 @@
 
         // attach scroll events
         attachWheel();
+        //remove our scroll events when we're removed
+        me.on('remove', function(){
+            detachWheel();
+        });
 
         function _onWheel(e)
         {
@@ -385,6 +390,18 @@
           else
           {
             document.attachEvent("onmousewheel", _onWheel)
+          }
+        }
+        function detachWheel()
+        {
+          if (window.removeEventListener)
+          {
+            this.removeEventListener('DOMMouseScroll', _onWheel, false );
+            this.removeEventListener('mousewheel', _onWheel, false );
+          }
+          else
+          {
+            document.detachEvent("onmousewheel", _onWheel)
           }
         }
 
