@@ -141,8 +141,11 @@
                 bar.remove();
                 rail.remove();
                 me.unwrap();
+
                 // reset manual styles added
                 me.css({height: "", width: "", overflow: ""});
+                detachWheel();
+
                 return;
               }
 
@@ -314,6 +317,10 @@
 
         // attach scroll events
         attachWheel();
+        //remove our scroll events when we're removed
+        me.on('remove', function(){
+            detachWheel();
+        });
 
         function _onWheel(e)
         {
@@ -396,6 +403,18 @@
           else
           {
             document.attachEvent("onmousewheel", _onWheel)
+          }
+        }
+        function detachWheel()
+        {
+          if (window.removeEventListener)
+          {
+            window.removeEventListener('DOMMouseScroll', _onWheel, false );
+            window.removeEventListener('mousewheel', _onWheel, false );
+          }
+          else
+          {
+            document.detachEvent("onmousewheel", _onWheel)
           }
         }
 
